@@ -48,7 +48,8 @@ func _ready():
 	PlayerStats.player_max_health = MAX_HEALTH
 	PlayerStats.player_health = INITIAL_HEALTH
 	dash_cooldown = PlayerStats.get_node("DashCooldown")
-	dash_cooldown.wait_time = DASH_COOLDOWN
+	dash_cooldown.wait_time = DASH_COOLDOWN\
+
 func _process(delta):
 	aim_direction = global_position.direction_to(get_global_mouse_position())
 	$DirectionArrow.rotation = aim_direction.angle()

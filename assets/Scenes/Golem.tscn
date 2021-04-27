@@ -475,7 +475,6 @@ texture = ExtResource( 2 )
 offset = Vector2( 1, 0 )
 hframes = 4
 vframes = 4
-frame = 12
 
 [node name="Laser" type="Sprite" parent="."]
 visible = false
@@ -563,10 +562,8 @@ damage = 1
 modulate = Color( 0.960784, 0.172549, 0.172549, 1 )
 position = Vector2( 0, 8 )
 shape = SubResource( 17 )
-disabled = true
 
 [node name="BodyHitbox" parent="." instance=ExtResource( 6 )]
-visible = false
 position = Vector2( 0, 37 )
 MASK = 1
 damage = 1
@@ -575,7 +572,6 @@ damage = 1
 modulate = Color( 0.960784, 0.172549, 0.172549, 1 )
 position = Vector2( 0, 8 )
 shape = SubResource( 18 )
-disabled = true
 
 [node name="ChaseTrigger" type="Area2D" parent="."]
 visible = false

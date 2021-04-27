@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://assets/Scenes/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://assets/Scenes/Instance Map.tscn" type="PackedScene" id=2]
@@ -13,6 +13,7 @@
 [ext_resource path="res://assets/Scenes/Golem.tscn" type="PackedScene" id=11]
 [ext_resource path="res://assets/sounds/boss song.mp3" type="AudioStream" id=12]
 [ext_resource path="res://assets/shaders/colour.shader" type="Shader" id=13]
+[ext_resource path="res://assets/scripts/World.gd" type="Script" id=14]
 
 [sub_resource type="ShaderMaterial" id=1]
 resource_local_to_scene = true
@@ -22,6 +23,7 @@ shader_param/enabled = false
 
 [node name="World" type="Node2D"]
 position = Vector2( -30.6759, 0.471924 )
+script = ExtResource( 14 )
 
 [node name="Background" type="TileMap" parent="."]
 tile_set = ExtResource( 9 )

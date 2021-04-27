@@ -3,6 +3,8 @@ extends Node
 var player_health := 1 setget set_player_health
 var player_max_health := 1 setget set_player_max_health
 
+var speedrun_time = 0.0
+
 signal player_health_changed(old_health, new_health)
 signal player_max_health_changed(old_max, new_max)
 

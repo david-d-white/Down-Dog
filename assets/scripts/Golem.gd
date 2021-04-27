@@ -84,6 +84,7 @@ func change_state(state):
 			hide_all()
 			speed = 0
 			$AnimationPlayer.play("Spin_Start")
+			$Hurtbox.set_invincible(true)
 			knockback = SPIN_KNOCK
 		LASER:
 			speed = IDLE_SPEED
