@@ -88,27 +88,27 @@ shader_param/colour = Color( 0.705882, 0.321569, 0.321569, 0.862745 )
 shader_param/enabled = false
 
 [sub_resource type="AtlasTexture" id=9]
-atlas = ExtResource( 1 )
+atlas = ExtResource( 2 )
 region = Rect2( 0, 0, 24, 24 )
 
 [sub_resource type="AtlasTexture" id=10]
 atlas = ExtResource( 2 )
-region = Rect2( 0, 0, 24, 24 )
+region = Rect2( 0, 24, 24, 24 )
 
 [sub_resource type="AtlasTexture" id=11]
-atlas = ExtResource( 2 )
-region = Rect2( 0, 24, 24, 24 )
+atlas = ExtResource( 1 )
+region = Rect2( 0, 0, 24, 24 )
 
 [sub_resource type="SpriteFrames" id=12]
 animations = [ {
-"frames": [ SubResource( 9 ) ],
-"loop": true,
-"name": "Idle",
-"speed": 10.0
-}, {
-"frames": [ SubResource( 10 ), SubResource( 11 ) ],
+"frames": [ SubResource( 9 ), SubResource( 10 ) ],
 "loop": true,
 "name": "Run",
+"speed": 10.0
+}, {
+"frames": [ SubResource( 11 ) ],
+"loop": true,
+"name": "Idle",
 "speed": 10.0
 } ]
 
@@ -180,7 +180,6 @@ dash_colour = Color( 0.94902, 0.941176, 0.898039, 0.862745 )
 [node name="ArrowSprite" type="AnimatedSprite" parent="DirectionArrow"]
 position = Vector2( 15, 0 )
 frames = SubResource( 5 )
-frame = 3
 playing = true
 
 [node name="Slash" type="Node2D" parent="."]
@@ -212,6 +211,7 @@ material = SubResource( 8 )
 position = Vector2( 0, -2 )
 frames = SubResource( 12 )
 animation = "Run"
+frame = 1
 playing = true
 
 [node name="CollisionBox" type="CollisionShape2D" parent="."]
@@ -266,6 +266,7 @@ stream = ExtResource( 10 )
 stream = ExtResource( 11 )
 volume_db = 5.0
 
+[connection signal="hit_success" from="Slash/Hitbox" to="." method="_on_hit_success"]
 [connection signal="body_entered" from="Ground Sensor" to="." method="_on_grounded"]
 [connection signal="body_exited" from="Ground Sensor" to="." method="_on_ground_left"]
 [connection signal="timeout" from="DashTimer" to="." method="_on_dash_finish"]

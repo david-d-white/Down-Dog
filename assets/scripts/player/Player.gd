@@ -50,8 +50,7 @@ func _ready():
 	dash_cooldown = PlayerStats.get_node("DashCooldown")
 	dash_cooldown.wait_time = DASH_COOLDOWN
 func _process(delta):
-	aim_direction = get_global_mouse_position() - position
-	aim_direction = aim_direction.normalized()
+	aim_direction = global_position.direction_to(get_global_mouse_position())
 	$DirectionArrow.rotation = aim_direction.angle()
 
 func _physics_process(delta):
@@ -162,3 +161,6 @@ func _on_spawn_dash_particle():
 func die():
 	get_tree().change_scene("res://assets/Scenes/End Screen.tscn")
 
+func _on_hit_success(hurtbox):
+	if !grounded:
+		velocity = -$Slash/Hitbox.knockback_vector*2

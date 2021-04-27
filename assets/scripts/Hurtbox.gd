@@ -3,7 +3,7 @@ extends Area2D
 class_name Hurtbox
 
 export (int, FLAGS, "Player", "Enemy") var LAYER := 0
-export (float) var INVINCIBILITY_TIME := 1.0
+export (float) var INVINCIBILITY_TIME := 0.5
 
 signal damage_taken(hitbox)
 signal invincibility_started()

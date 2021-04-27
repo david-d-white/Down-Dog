@@ -45,7 +45,7 @@ func _physics_process(delta):
 				change_state(SHOCKWAVE)
 		SHOCKWAVE:
 			if $ShockwaveHeightTrigger.get_overlapping_bodies().size() == 0:
-				velocity = velocity.move_toward(Vector2.DOWN * speed/2, acceleration*delta)
+				velocity = velocity.move_toward(Vector2.DOWN * speed*2, acceleration*delta)
 			else:
 				velocity = velocity.move_toward(Vector2.ZERO, acceleration*delta)
 				if $AnimationPlayer.current_animation != "Shockwave":
@@ -55,8 +55,6 @@ func _physics_process(delta):
 		LASER_CHASE:
 			chase(delta)
 			if $LaserHit/LaserTrigger.get_overlapping_bodies().size() > 0:
-				hide_all()
-				$AnimationPlayer.play("Laser")
 				change_state(LASER)
 		LASER:
 			velocity = velocity.move_toward(Vector2.ZERO, acceleration*delta)
@@ -94,7 +92,10 @@ func change_state(state):
 				$LaserHit/Hitbox.knockback_vector.x = -LASER_KNOCK
 			else:
 				$LaserHit/Hitbox.knockback_vector.x = LASER_KNOCK
+			hide_all()
+			$AnimationPlayer.play("Laser")
 		LASER_CHASE, RISE:
+			$ForceTimer.start()
 			speed = IDLE_SPEED
 			acceleration = IDLE_ACCEL
 			knockback = IDLE_KNOCK
@@ -176,3 +177,13 @@ func _on_Hurtbox_damage_taken(hitbox):
 
 func return_to_menu():
 	get_tree().change_scene("res://assets/Scenes/End Screen.tscn")
+
+
+func _on_LaserTimer_timeout():
+	if $AnimationPlayer.current_animation == "Death":
+		return
+	match (state):
+		LASER_CHASE:
+			change_state(LASER)
+		RISE:
+			change_state(SHOCKWAVE)

@@ -100,9 +100,13 @@ shape = SubResource( 6 )
 visible = false
 modulate = Color( 0.290196, 1, 0, 1 )
 LAYER = 2
+INVINCIBILITY_TIME = 0.25
 
 [node name="CollisionShape2D" parent="Hurtbox" index="0"]
 shape = SubResource( 7 )
+
+[node name="Invincibility" parent="Hurtbox" index="1"]
+wait_time = 0.25
 
 [node name="DeathAnim" type="AnimationPlayer" parent="."]
 anims/Death = SubResource( 8 )
