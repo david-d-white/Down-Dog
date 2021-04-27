@@ -1,0 +1,113 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://assets/sprites/enemies/slime.png" type="Texture" id=1]
+[ext_resource path="res://assets/Scenes/Hurtbox.tscn" type="PackedScene" id=2]
+[ext_resource path="res://assets/scripts/Slime.gd" type="Script" id=3]
+[ext_resource path="res://assets/Scenes/Hitbox.tscn" type="PackedScene" id=4]
+
+[sub_resource type="AtlasTexture" id=1]
+atlas = ExtResource( 1 )
+region = Rect2( 0, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=2]
+atlas = ExtResource( 1 )
+region = Rect2( 0, 16, 16, 16 )
+
+[sub_resource type="SpriteFrames" id=3]
+animations = [ {
+"frames": [ SubResource( 1 ), SubResource( 2 ) ],
+"loop": true,
+"name": "default",
+"speed": 6.0
+} ]
+
+[sub_resource type="CapsuleShape2D" id=4]
+radius = 3.5
+height = 10.0
+
+[sub_resource type="CapsuleShape2D" id=5]
+radius = 5.0
+height = 8.0
+
+[sub_resource type="Animation" id=6]
+resource_name = "Death"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("AnimatedSprite:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 16.5642 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 0, 0, 0, 0 ) ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.5 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "queue_free"
+} ]
+}
+
+[sub_resource type="CapsuleShape2D" id=7]
+radius = 4.0
+height = 6.0
+
+[node name="Slime" type="KinematicBody2D"]
+collision_layer = 4
+script = ExtResource( 3 )
+direction = -1
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+position = Vector2( 0, -3 )
+frames = SubResource( 3 )
+frame = 1
+playing = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+modulate = Color( 0, 0.0625, 1, 1 )
+position = Vector2( 0, -0.5 )
+rotation = 1.5708
+shape = SubResource( 4 )
+
+[node name="Hurtbox" parent="." instance=ExtResource( 2 )]
+visible = false
+LAYER = 2
+
+[node name="CollisionShape2D" parent="Hurtbox" index="0"]
+modulate = Color( 0.290196, 1, 0, 1 )
+rotation = 1.5708
+shape = SubResource( 5 )
+
+[node name="Invincibility" parent="Hurtbox" index="1"]
+wait_time = 0.25
+
+[node name="DeathAnim" type="AnimationPlayer" parent="."]
+anims/Death = SubResource( 6 )
+
+[node name="Hitbox" parent="." instance=ExtResource( 4 )]
+MASK = 1
+damage = 1
+
+[node name="CollisionShape2D" parent="Hitbox" index="0"]
+modulate = Color( 0.960784, 0.172549, 0.172549, 1 )
+position = Vector2( 0, 1 )
+rotation = 1.5708
+shape = SubResource( 7 )
+
+[connection signal="damage_taken" from="Hurtbox" to="." method="_on_damage_taken"]
+[connection signal="hit_success" from="Hitbox" to="." method="_on_hit_success"]
+
+[editable path="Hurtbox"]
+[editable path="Hitbox"]

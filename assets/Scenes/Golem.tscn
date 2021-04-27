@@ -1,0 +1,625 @@
+[gd_scene load_steps=31 format=2]
+
+[ext_resource path="res://assets/sprites/enemies/golem_idle.png" type="Texture" id=1]
+[ext_resource path="res://assets/sprites/enemies/golem_spin.png" type="Texture" id=2]
+[ext_resource path="res://assets/sprites/enemies/golem_laser.png" type="Texture" id=3]
+[ext_resource path="res://assets/sprites/enemies/golem_slam.png" type="Texture" id=4]
+[ext_resource path="res://assets/Scenes/Hurtbox.tscn" type="PackedScene" id=5]
+[ext_resource path="res://assets/Scenes/Hitbox.tscn" type="PackedScene" id=6]
+[ext_resource path="res://assets/scripts/Golem.gd" type="Script" id=7]
+[ext_resource path="res://assets/sprites/effects/laser.png" type="Texture" id=8]
+[ext_resource path="res://assets/sounds/laser.wav" type="AudioStream" id=9]
+
+[sub_resource type="AtlasTexture" id=1]
+atlas = ExtResource( 8 )
+region = Rect2( 0, 0, 128, 19 )
+
+[sub_resource type="AtlasTexture" id=2]
+atlas = ExtResource( 8 )
+region = Rect2( 0, 19, 128, 19 )
+
+[sub_resource type="AtlasTexture" id=3]
+atlas = ExtResource( 8 )
+region = Rect2( 0, 38, 128, 19 )
+
+[sub_resource type="SpriteFrames" id=4]
+animations = [ {
+"frames": [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ) ],
+"loop": false,
+"name": "default",
+"speed": 3.0
+} ]
+
+[sub_resource type="CapsuleShape2D" id=5]
+radius = 8.0
+height = 156.0
+
+[sub_resource type="CapsuleShape2D" id=6]
+radius = 19.0
+height = 338.0
+
+[sub_resource type="Animation" id=7]
+resource_name = "Awaken"
+length = 0.8
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath("Shockwave:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.8 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Shockwave:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4, 0.6 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 14, 16, 17, 18 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Hurtbox:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.4, 0.6 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ Vector2( 0, 38 ), Vector2( 0, 16 ), Vector2( 0, 0 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("BodyHitbox:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.4, 0.6 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ Vector2( 0, 37 ), Vector2( 0, 15 ), Vector2( 0, -1 ) ]
+}
+
+[sub_resource type="Animation" id=8]
+resource_name = "Death"
+length = 1.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("Laser:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 9 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Laser:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Laser:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 0, 0, 0, 0 ) ]
+}
+tracks/3/type = "method"
+tracks/3/path = NodePath(".")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 1.5 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "return_to_menu"
+} ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("BodyHitbox/CollisionShape2D:disabled")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+
+[sub_resource type="Animation" id=9]
+length = 1.2
+loop = true
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath("Idle:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Idle:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4, 0.6, 0.8, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3, 4, 1 ]
+}
+
+[sub_resource type="Animation" id=10]
+length = 1.6
+tracks/0/type = "value"
+tracks/0/path = NodePath("Laser:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1.6 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Laser:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.1, 1.2, 1.3, 1.4, 1.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("LaserHit/LaserBeam:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 1.1, 1.6 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 0, 0 ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("LaserHit/LaserBeam:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 1.1, 1.6 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("LaserHit/LaserBeam:playing")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 1.1, 1.6 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("LaserHit/Hitbox/CollisionShape2D:disabled")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 1.1, 1.6 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+tracks/6/type = "audio"
+tracks/6/path = NodePath("LaserHit/AudioStreamPlayer")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"clips": [ {
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource( 9 )
+} ],
+"times": PoolRealArray( 1 )
+}
+
+[sub_resource type="Animation" id=11]
+length = 1.7
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath("Shockwave:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1.7 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Shockwave:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.05, 0.1, 0.15, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.1, 1.2, 1.3, 1.4, 1.5, 1.6 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("SlamHitbox/CollisionShape2D:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0.8, 0.95 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Hurtbox:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0.95, 1.5, 1.6 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ Vector2( 0, 38 ), Vector2( 0, 16 ), Vector2( 0, 0 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("BodyHitbox:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0.95, 1.5, 1.6 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ Vector2( 0, 37 ), Vector2( 0, 15 ), Vector2( 0, -1 ) ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("BodyHitbox/CollisionShape2D:disabled")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0.8, 0.95 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+
+[sub_resource type="Animation" id=12]
+length = 0.4
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Spin:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Spin:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 9, 10, 11, 12 ]
+}
+
+[sub_resource type="Animation" id=13]
+tracks/0/type = "value"
+tracks/0/path = NodePath("Spin:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Spin:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 8, 7, 6, 5, 5, 4, 3, 2, 1, 0 ]
+}
+
+[sub_resource type="Animation" id=14]
+length = 0.9
+tracks/0/type = "value"
+tracks/0/path = NodePath("Spin:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.9 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Spin:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3, 4, 5, 6, 7, 8 ]
+}
+
+[sub_resource type="CapsuleShape2D" id=15]
+radius = 23.0
+height = 16.0
+
+[sub_resource type="CapsuleShape2D" id=16]
+radius = 30.0
+height = 0.0
+
+[sub_resource type="CapsuleShape2D" id=17]
+radius = 24.0
+height = 40.0
+
+[sub_resource type="CapsuleShape2D" id=18]
+radius = 25.0
+height = 2.0
+
+[sub_resource type="CircleShape2D" id=19]
+radius = 120.266
+
+[sub_resource type="CapsuleShape2D" id=20]
+radius = 48.0
+height = 16.0
+
+[sub_resource type="RectangleShape2D" id=21]
+extents = Vector2( 2, 2 )
+
+[node name="Golem" type="KinematicBody2D"]
+collision_layer = 0
+script = ExtResource( 7 )
+
+[node name="Idle" type="Sprite" parent="."]
+visible = false
+texture = ExtResource( 1 )
+offset = Vector2( 1, 0 )
+hframes = 2
+vframes = 3
+
+[node name="Spin" type="Sprite" parent="."]
+visible = false
+texture = ExtResource( 2 )
+offset = Vector2( 1, 0 )
+hframes = 4
+vframes = 4
+frame = 12
+
+[node name="Laser" type="Sprite" parent="."]
+visible = false
+texture = ExtResource( 3 )
+offset = Vector2( 1, 0 )
+hframes = 4
+vframes = 4
+
+[node name="Shockwave" type="Sprite" parent="."]
+texture = ExtResource( 4 )
+offset = Vector2( 1, 0 )
+hframes = 4
+vframes = 5
+frame = 14
+
+[node name="LaserHit" type="Node2D" parent="."]
+position = Vector2( 0, -13 )
+
+[node name="LaserBeam" type="AnimatedSprite" parent="LaserHit"]
+visible = false
+position = Vector2( -196, -1 )
+scale = Vector2( 3, 2 )
+frames = SubResource( 4 )
+
+[node name="LaserTrigger" type="Area2D" parent="LaserHit"]
+position = Vector2( 0, 13 )
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LaserHit/LaserTrigger"]
+modulate = Color( 0.435294, 0.282353, 0.0627451, 1 )
+position = Vector2( -94, -13 )
+rotation = 1.5708
+shape = SubResource( 5 )
+
+[node name="Hitbox" parent="LaserHit" instance=ExtResource( 6 )]
+MASK = 1
+damage = 1
+
+[node name="CollisionShape2D" parent="LaserHit/Hitbox" index="0"]
+modulate = Color( 0.960784, 0.172549, 0.172549, 1 )
+position = Vector2( -195, 1 )
+rotation = 1.5708
+shape = SubResource( 6 )
+disabled = true
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="LaserHit"]
+stream = ExtResource( 9 )
+volume_db = -8.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/Awaken = SubResource( 7 )
+anims/Death = SubResource( 8 )
+anims/Idle = SubResource( 9 )
+anims/Laser = SubResource( 10 )
+anims/Shockwave = SubResource( 11 )
+anims/Spin = SubResource( 12 )
+anims/Spin_End = SubResource( 13 )
+anims/Spin_Start = SubResource( 14 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+modulate = Color( 0, 0.345098, 1, 1 )
+position = Vector2( 0, 7 )
+shape = SubResource( 15 )
+
+[node name="Hurtbox" parent="." instance=ExtResource( 5 )]
+position = Vector2( 0, 38 )
+LAYER = 2
+INVINCIBILITY_TIME = 0.0
+
+[node name="CollisionShape2D" parent="Hurtbox" index="0"]
+modulate = Color( 0.290196, 1, 0, 1 )
+position = Vector2( 0, 7 )
+shape = SubResource( 16 )
+disabled = true
+
+[node name="SlamHitbox" parent="." instance=ExtResource( 6 )]
+position = Vector2( 0, 16 )
+MASK = 1
+damage = 1
+
+[node name="CollisionShape2D" parent="SlamHitbox" index="0"]
+modulate = Color( 0.960784, 0.172549, 0.172549, 1 )
+position = Vector2( 0, 8 )
+shape = SubResource( 17 )
+disabled = true
+
+[node name="BodyHitbox" parent="." instance=ExtResource( 6 )]
+visible = false
+position = Vector2( 0, 37 )
+MASK = 1
+damage = 1
+
+[node name="CollisionShape2D" parent="BodyHitbox" index="0"]
+modulate = Color( 0.960784, 0.172549, 0.172549, 1 )
+position = Vector2( 0, 8 )
+shape = SubResource( 18 )
+disabled = true
+
+[node name="ChaseTrigger" type="Area2D" parent="."]
+visible = false
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ChaseTrigger"]
+modulate = Color( 0.435294, 0.282353, 0.0627451, 1 )
+shape = SubResource( 19 )
+
+[node name="ShockwaveTrigger" type="Area2D" parent="."]
+visible = false
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ShockwaveTrigger"]
+modulate = Color( 0.435294, 0.282353, 0.0627451, 1 )
+position = Vector2( 0, 32 )
+shape = SubResource( 20 )
+
+[node name="AttackTimer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+
+[node name="SpinTimer" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
+
+[node name="ShockwaveHeightTrigger" type="Area2D" parent="."]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ShockwaveHeightTrigger"]
+modulate = Color( 0.435294, 0.282353, 0.0627451, 1 )
+position = Vector2( 0, 59 )
+shape = SubResource( 21 )
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]
+[connection signal="damage_taken" from="Hurtbox" to="." method="_on_Hurtbox_damage_taken"]
+[connection signal="hit_success" from="SlamHitbox" to="." method="_on_SlamHitbox_hit_success"]
+[connection signal="hit_success" from="BodyHitbox" to="." method="_on_BodyHitbox_hit_success"]
+[connection signal="body_entered" from="ChaseTrigger" to="." method="_on_ChaseTrigger_body_entered"]
+[connection signal="timeout" from="AttackTimer" to="." method="_on_AttackTimer_timeout"]
+[connection signal="timeout" from="SpinTimer" to="." method="_on_spin_finished"]
+
+[editable path="LaserHit/Hitbox"]
+[editable path="Hurtbox"]
+[editable path="SlamHitbox"]
+[editable path="BodyHitbox"]
