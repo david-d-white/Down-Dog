@@ -1,5 +1,8 @@
 extends Control
 
+func _ready():
+	$MarginContainer/VSplitContainer/MarginContainer2/CenterContainer/VBoxContainer/Play.grab_focus()
+
 func _on_Play_pressed():
 	get_tree().change_scene("res://assets/Scenes/Controls.tscn")
 

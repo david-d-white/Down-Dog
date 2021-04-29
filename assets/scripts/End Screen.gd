@@ -2,15 +2,11 @@ extends Control
 
 func _ready():
 	if PlayerStats.player_health > 0:
-		$MarginContainer/Controls.text = """		  CONGRATULATIONS
-			Time: %.2fs
-		
-		<SPACE TO CONTINUE>""" % PlayerStats.speedrun_time
+		$MarginContainer/Message.text = """		  CONGRATULATIONS
+			Time: %.2fs""" % PlayerStats.speedrun_time
 	else:
-		$MarginContainer/Controls.text = """		     GAME OVER
-		
-		<SPACE TO CONTINUE>"""
+		$MarginContainer/Message.text = """		     GAME OVER"""
 
-func _process(delta):
-	if Input.is_action_just_pressed("movement_jump"):
+func _input(event):
+	if event.is_pressed():
 		get_tree().change_scene("res://assets/Scenes/Menu.tscn")

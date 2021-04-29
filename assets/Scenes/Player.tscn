@@ -180,7 +180,7 @@ dash_colour = Color( 0.94902, 0.941176, 0.898039, 0.862745 )
 [node name="ArrowSprite" type="AnimatedSprite" parent="DirectionArrow"]
 position = Vector2( 15, 0 )
 frames = SubResource( 5 )
-frame = 1
+frame = 2
 playing = true
 
 [node name="Slash" type="Node2D" parent="."]
@@ -212,6 +212,7 @@ material = SubResource( 8 )
 position = Vector2( 0, -2 )
 frames = SubResource( 12 )
 animation = "Run"
+frame = 1
 playing = true
 
 [node name="CollisionBox" type="CollisionShape2D" parent="."]
@@ -271,8 +272,8 @@ volume_db = 5.0
 [connection signal="body_exited" from="Ground Sensor" to="." method="_on_ground_left"]
 [connection signal="timeout" from="DashTimer" to="." method="_on_dash_finish"]
 [connection signal="timeout" from="DashParticleTimer" to="." method="_on_spawn_dash_particle"]
-[connection signal="damage_taken" from="Hurtbox" to="." method="_on_damaged"]
 [connection signal="damage_taken" from="Hurtbox" to="." method="_on_damage_taken"]
+[connection signal="damage_taken" from="Hurtbox" to="." method="_on_damaged"]
 [connection signal="invincibility_ended" from="Hurtbox" to="." method="_on_invincibility_end"]
 [connection signal="invincibility_started" from="Hurtbox" to="." method="_on_invincibility_start"]
 

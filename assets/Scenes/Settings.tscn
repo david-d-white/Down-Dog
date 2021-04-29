@@ -42,9 +42,9 @@ margin_bottom = 160.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/CenterContainer"]
 margin_left = 57.0
-margin_top = 51.0
+margin_top = 35.0
 margin_right = 242.0
-margin_bottom = 109.0
+margin_bottom = 124.0
 
 [node name="Fullscreen" parent="MarginContainer/CenterContainer/VBoxContainer" instance=ExtResource( 2 )]
 margin_left = 0.0
@@ -53,16 +53,26 @@ margin_right = 185.0
 margin_bottom = 27.0
 rect_scale = Vector2( 1, 1 )
 custom_fonts/font = SubResource( 1 )
-text = "Fullscreen"
+text = "FULLSCREEN"
 
-[node name="Back" parent="MarginContainer/CenterContainer/VBoxContainer" instance=ExtResource( 2 )]
+[node name="InputMode" parent="MarginContainer/CenterContainer/VBoxContainer" instance=ExtResource( 2 )]
 margin_left = 0.0
 margin_top = 31.0
 margin_right = 185.0
 margin_bottom = 58.0
 rect_scale = Vector2( 1, 1 )
 custom_fonts/font = SubResource( 1 )
-text = "Back"
+text = "INPUT MODE"
+
+[node name="Back" parent="MarginContainer/CenterContainer/VBoxContainer" instance=ExtResource( 2 )]
+margin_left = 0.0
+margin_top = 62.0
+margin_right = 185.0
+margin_bottom = 89.0
+rect_scale = Vector2( 1, 1 )
+custom_fonts/font = SubResource( 1 )
+text = "BACK"
 
 [connection signal="pressed" from="MarginContainer/CenterContainer/VBoxContainer/Fullscreen" to="." method="_on_Fullscreen_pressed"]
+[connection signal="pressed" from="MarginContainer/CenterContainer/VBoxContainer/InputMode" to="." method="_on_InputMode_pressed"]
 [connection signal="pressed" from="MarginContainer/CenterContainer/VBoxContainer/Back" to="." method="_on_Back_pressed"]

@@ -51,7 +51,15 @@ func _ready():
 	dash_cooldown.wait_time = DASH_COOLDOWN\
 
 func _process(delta):
-	aim_direction = global_position.direction_to(get_global_mouse_position())
+	match (GlobalSettings.input_mode):
+		GlobalSettings.InputModes.CONTROLLER:
+			var input = Vector2.ZERO
+			input.x = Input.get_action_strength("movement_right") - Input.get_action_strength("movement_left")
+			input.y = Input.get_action_strength("movement_down") - Input.get_action_strength("movement_up")
+			if input.length() >= 0.5:
+				aim_direction = input.normalized()
+		GlobalSettings.InputModes.KEYBOARD:
+			aim_direction = global_position.direction_to(get_global_mouse_position())
 	$DirectionArrow.rotation = aim_direction.angle()
 
 func _physics_process(delta):
